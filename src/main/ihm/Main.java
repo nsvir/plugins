@@ -1,4 +1,4 @@
-package main.views;
+package main.ihm;
 
 import java.io.File;
 
