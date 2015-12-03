@@ -1,10 +1,8 @@
 package main.files;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
-public class PluginFinder implements ActionListener {
+public class PluginFinder {
     protected File directory;
     PluginFilter pluginFilter;
 
@@ -15,10 +13,5 @@ public class PluginFinder implements ActionListener {
 
     public File[] getClassFiles() {
         return this.directory.listFiles(this.pluginFilter);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
     }
 }
