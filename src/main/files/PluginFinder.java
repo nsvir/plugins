@@ -3,7 +3,9 @@ package main.files;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.swing.Timer;
 
@@ -12,12 +14,14 @@ public class PluginFinder implements ActionListener {
     protected PluginFilter pluginFilter;
     protected Set<File> foundFiles;
     protected Timer timer;
+    protected List<PluginListener> listeners;
 
     public PluginFinder (File directory) {
         this.directory = directory;
         this.pluginFilter = new PluginFilter();
         this.foundFiles = new HashSet<File>();
         this.timer = new Timer(1000, this);
+        this.listeners = new ArrayList<PluginListener>();
     }
 
     @Override
@@ -25,6 +29,14 @@ public class PluginFinder implements ActionListener {
         Set<File> files = this.getClassFiles();
         this.checkForNewPlugins(files);
         this.checkForOldPlugins(files);
+    }
+
+    public void startTimer(){
+        this.timer.start();
+    }
+
+    public void stopTimer(){
+        this.timer.stop();
     }
 
     public Set<File> getClassFiles() {
@@ -40,6 +52,7 @@ public class PluginFinder implements ActionListener {
     public void checkForNewPlugins(Set<File> checkFiles) {
         for (File file: checkFiles) {
             if (!this.foundFiles.contains(file)) {
+                this.insertPluginFromListeners(file);
                 this.foundFiles.add(file);
             }
         }
@@ -48,8 +61,21 @@ public class PluginFinder implements ActionListener {
     public void checkForOldPlugins(Set<File> checkFiles) {
         for (File file: this.foundFiles) {
             if(!checkFiles.contains(file)) {
+                this.deletePluginFromListeners(file);
                 this.foundFiles.remove(file);
             }
+        }
+    }
+
+    public void insertPluginFromListeners(File file){
+        for(PluginListener listener: this.listeners){
+            listener.insertPlugin(file);
+        }
+    }
+
+    public void deletePluginFromListeners(File file){
+        for(PluginListener listener: this.listeners){
+            listener.deletePlugin(file);
         }
     }
 
@@ -67,5 +93,9 @@ public class PluginFinder implements ActionListener {
 
     public Timer getTimer() {
         return timer;
+    }
+
+    public List<PluginListener> getListeners() {
+        return listeners;
     }
 }

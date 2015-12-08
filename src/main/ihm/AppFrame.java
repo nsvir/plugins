@@ -41,5 +41,7 @@ public class AppFrame extends JFrame {
         menuBar.add(tools);
 
         this.setJMenuBar(menuBar);
+
+        this.pluginFinder.startTimer();
     }
 }
