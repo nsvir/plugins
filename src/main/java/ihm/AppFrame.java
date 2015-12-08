@@ -1,4 +1,4 @@
-package main.ihm;
+package ihm;
 
 import main.files.PluginFinder;
 
