@@ -22,14 +22,6 @@ task run(type:Exec, dependsOn:build) {
     standardInput = System.in
 }
 
-sourceSets {
-    main {
-        srcDir 'src/main'
-    }
-}
-
-
-
 // In this section you declare the dependencies for your production and test code
 dependencies {
     // The production code uses the SLF4J logging API at compile time
@@ -44,6 +36,6 @@ dependencies {
 
 jar {
     manifest {
-        attributes("Main-Class": "Main");
+        attributes("Main-Class": "ihm.Main");
     }
 }
