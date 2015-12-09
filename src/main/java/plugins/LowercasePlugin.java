@@ -1,4 +1,4 @@
-package plugins;
+package main.java.plugins;
 
 public class LowercasePlugin implements Plugin {
 

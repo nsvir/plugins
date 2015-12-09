@@ -1,4 +1,4 @@
-package files;
+package main.java.files;
 
 import java.io.File;
 import java.util.EventListener;

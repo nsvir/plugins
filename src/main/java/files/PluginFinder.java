@@ -1,4 +1,4 @@
-package files;
+package main.java.files;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

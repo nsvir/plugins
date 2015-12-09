@@ -1,4 +1,4 @@
-package ihm;
+package main.java.ihm;
 
 import java.io.File;
 
