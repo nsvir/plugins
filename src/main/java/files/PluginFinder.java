@@ -51,16 +51,9 @@ public class PluginFinder extends Observable implements ActionListener {
             if (!this.foundFiles.contains(file)) {
                 System.out.println("New file " + file.getName());
                 this.foundFiles.add(file);
-                Class<?> c = null;
-                Plugin plugin = null;
-                try {
-                    c =  Class.forName("plugins." + file.getName().substring(0, file.getName().length() - 6));
-                    plugin = (Plugin) c.getConstructor().newInstance();
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
+
                 setChanged();
-                notifyObservers(plugin);
+                notifyObservers();
             }
         }
     }
@@ -69,9 +62,11 @@ public class PluginFinder extends Observable implements ActionListener {
         for (File file: this.foundFiles) {
             if(!checkFiles.contains(file)) {
                 this.foundFiles.remove(file);
+
                 System.out.println("Old file " + file.getName());
+
                 setChanged();
-                notifyObservers(file);
+                notifyObservers();
             }
         }
     }
