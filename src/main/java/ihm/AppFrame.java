@@ -6,6 +6,8 @@ import plugins.Plugin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
@@ -58,6 +60,12 @@ public class AppFrame extends JFrame implements Observer {
         JMenuItem toolsMenuItem = new JMenuItem();
         Plugin plugin = (Plugin) arg;
         toolsMenuItem.setText(plugin.getDescription());
+        toolsMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText(plugin.doAction(textArea.getText()));
+            }
+        });
         this.toolsMenuItems.add(toolsMenuItem);
         this.tools.add(toolsMenuItem);
     }

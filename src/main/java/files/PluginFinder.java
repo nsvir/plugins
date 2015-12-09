@@ -13,14 +13,12 @@ public class PluginFinder extends Observable implements ActionListener {
     protected PluginFilter pluginFilter;
     protected Set<File> foundFiles;
     protected Timer timer;
-    protected List<PluginListener> listeners;
 
     public PluginFinder (File directory) {
         this.directory = directory;
         this.pluginFilter = new PluginFilter();
         this.foundFiles = new HashSet<File>();
         this.timer = new Timer(1000, this);
-        this.listeners = new ArrayList<PluginListener>();
     }
 
     @Override
@@ -52,7 +50,6 @@ public class PluginFinder extends Observable implements ActionListener {
         for (File file: checkFiles) {
             if (!this.foundFiles.contains(file)) {
                 System.out.println("New file " + file.getName());
-                this.insertPluginFromListeners(file);
                 this.foundFiles.add(file);
                 Class<?> c = null;
                 Plugin plugin = null;
@@ -71,24 +68,11 @@ public class PluginFinder extends Observable implements ActionListener {
     public void checkForOldPlugins(Set<File> checkFiles) {
         for (File file: this.foundFiles) {
             if(!checkFiles.contains(file)) {
-                this.deletePluginFromListeners(file);
                 this.foundFiles.remove(file);
                 System.out.println("Old file " + file.getName());
                 setChanged();
                 notifyObservers(file);
             }
-        }
-    }
-
-    public void insertPluginFromListeners(File file){
-        for(PluginListener listener: this.listeners){
-            listener.insertPlugin(file);
-        }
-    }
-
-    public void deletePluginFromListeners(File file){
-        for(PluginListener listener: this.listeners){
-            listener.deletePlugin(file);
         }
     }
 
@@ -108,7 +92,4 @@ public class PluginFinder extends Observable implements ActionListener {
         return timer;
     }
 
-    public List<PluginListener> getListeners() {
-        return listeners;
-    }
 }
