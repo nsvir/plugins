@@ -1,4 +1,4 @@
-package main.java.plugins;
+package plugins;
 
 public class UppercasePlugin implements Plugin {
 

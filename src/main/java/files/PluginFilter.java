@@ -1,4 +1,4 @@
-package main.java.files;
+package files;
 
 import java.io.File;
 import java.io.FilenameFilter;

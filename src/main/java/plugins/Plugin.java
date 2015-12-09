@@ -1,4 +1,4 @@
-package main.java.plugins;
+package plugins;
 
 public interface Plugin {
     public String getDescription();

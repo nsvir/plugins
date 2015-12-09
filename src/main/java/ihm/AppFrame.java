@@ -1,7 +1,7 @@
-package main.java.ihm;
+package ihm;
 
 
-import main.java.files.PluginFinder;
+import files.PluginFinder;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
