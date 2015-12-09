@@ -52,6 +52,7 @@ public class PluginFinder implements ActionListener {
     public void checkForNewPlugins(Set<File> checkFiles) {
         for (File file: checkFiles) {
             if (!this.foundFiles.contains(file)) {
+                System.out.println("New files " + file.getName());
                 this.insertPluginFromListeners(file);
                 this.foundFiles.add(file);
             }
