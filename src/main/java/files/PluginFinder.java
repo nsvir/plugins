@@ -1,5 +1,7 @@
 package files;
 
+import plugins.Plugin;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -52,8 +54,16 @@ public class PluginFinder extends Observable implements ActionListener {
                 System.out.println("New file " + file.getName());
                 this.insertPluginFromListeners(file);
                 this.foundFiles.add(file);
+                Class<?> c = null;
+                Plugin plugin = null;
+                try {
+                    c =  Class.forName("plugins." + file.getName().substring(0, file.getName().length() - 6));
+                    plugin = (Plugin) c.getConstructor().newInstance();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
                 setChanged();
-                notifyObservers(file);
+                notifyObservers(plugin);
             }
         }
     }
