@@ -1,6 +1,5 @@
 package ihm;
 
-
 import files.PluginFinder;
 import plugins.Plugin;
 
