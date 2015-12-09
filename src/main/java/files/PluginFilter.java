@@ -17,7 +17,7 @@ public class PluginFilter implements FilenameFilter {
 
         File fichier = new File(dir.getPath() + File.separator + name);
 
-        if (!name.endsWith(".class")) {
+        if (!fichier.getAbsolutePath().endsWith(".class")) {
             System.err.println("The file is not a .class" + fichier.getName());
             return false;
         }
