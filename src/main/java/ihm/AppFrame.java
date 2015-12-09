@@ -45,7 +45,7 @@ public class AppFrame extends JFrame implements Observer {
         // Setting menu
         this.menuBar = new JMenuBar();
         this.tools = new JMenu();
-        tools.setText("Tools");
+        tools.setText("Outils");
         menuBar.add(tools);
         this.setJMenuBar(menuBar);
         this.toolsMenuItems = new ArrayList<JMenuItem>();
