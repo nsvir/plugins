@@ -3,13 +3,10 @@ package files;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import javax.swing.Timer;
 
-public class PluginFinder implements ActionListener {
+public class PluginFinder extends Observable implements ActionListener {
     protected File directory;
     protected PluginFilter pluginFilter;
     protected Set<File> foundFiles;
@@ -52,9 +49,11 @@ public class PluginFinder implements ActionListener {
     public void checkForNewPlugins(Set<File> checkFiles) {
         for (File file: checkFiles) {
             if (!this.foundFiles.contains(file)) {
-                System.out.println("New files " + file.getName());
+                System.out.println("New file " + file.getName());
                 this.insertPluginFromListeners(file);
                 this.foundFiles.add(file);
+                setChanged();
+                notifyObservers(file);
             }
         }
     }
@@ -64,6 +63,9 @@ public class PluginFinder implements ActionListener {
             if(!checkFiles.contains(file)) {
                 this.deletePluginFromListeners(file);
                 this.foundFiles.remove(file);
+                System.out.println("Old file " + file.getName());
+                setChanged();
+                notifyObservers(file);
             }
         }
     }

@@ -2,16 +2,27 @@ package ihm;
 
 
 import files.PluginFinder;
+import plugins.Plugin;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.io.File;
+import java.util.Observable;
+import java.util.Observer;
 
-public class AppFrame extends JFrame {
+public class AppFrame extends JFrame implements Observer {
 
     protected static final int WIDTH = 600;
     protected static final int HEIGHT = 400;
 
     protected PluginFinder pluginFinder;
+
+    protected JTextArea textArea;
+    protected JMenuBar menuBar;
+    protected JMenu tools;
+    protected List<JMenuItem> toolsMenuItems;
 
     public AppFrame(File directory) {
         this.pluginFinder = new PluginFinder(directory);
@@ -26,22 +37,28 @@ public class AppFrame extends JFrame {
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
         // Add a text area
-        JTextArea textArea = new JTextArea();
+        this.textArea = new JTextArea();
         this.add(textArea);
 
-        JMenuBar menuBar = new JMenuBar();
-
-        JMenu tools = new JMenu();
+        // Setting menu
+        this.menuBar = new JMenuBar();
+        this.tools = new JMenu();
         tools.setText("Tools");
-
-        JMenuItem uppercase = new JMenuItem();
-        uppercase.setText("En majuscule");
-
-        tools.add(uppercase);
         menuBar.add(tools);
-
         this.setJMenuBar(menuBar);
+        this.toolsMenuItems = new ArrayList<JMenuItem>();
 
+        // Configure the PluginFinder
         this.pluginFinder.startTimer();
+        this.pluginFinder.addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        JMenuItem toolsMenuItem = new JMenuItem();
+        Plugin plugin = (Plugin) arg;
+        toolsMenuItem.setText(plugin.getDescription());
+        this.toolsMenuItems.add(toolsMenuItem);
+        this.tools.add(toolsMenuItem);
     }
 }
