@@ -1,20 +1,9 @@
 package files;
 
 import java.io.File;
+import java.util.EventListener;
 
-/**
- * Created by damien on 08/12/15.
- */
-public class PluginListener {
-
-    PluginListener(){
-    }
-
-    public void insertPlugin(File file) {
-
-    }
-
-    public void deletePlugin(File file) {
-
-    }
+public interface PluginListener extends EventListener {
+    public void insertPlugin(File file);
+    public void deletePlugin(File file);
 }
