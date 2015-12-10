@@ -101,6 +101,13 @@ public class AppFrame extends JFrame implements Observer {
         this.toolsMenuItems.clear();
         this.tools.removeAll();
 
+        /*
+            TODO: En 2 observers
+            1 pour ajouter
+            1 pour supprimer
+         */
+
+
         for (File f: this.pluginFinder.getFoundFiles()){
             final Plugin plugin = this.createPlugin(f);
             JMenuItem toolsMenuItem = new JMenuItem();
