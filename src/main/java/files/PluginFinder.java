@@ -57,6 +57,8 @@ public class PluginFinder extends Observable implements ActionListener {
 
     /**
      * This function is called when we want to get Plugin Files into the directory of the PluginFinder
+     *
+     * @return a Set of Plugin files
      */
     public Set<File> getPluginFiles() {
         Set<File> classFiles = new HashSet<File>();
@@ -70,6 +72,8 @@ public class PluginFinder extends Observable implements ActionListener {
 
     /**
      * This function is called when we want to check for new Plugins on each iteration of the timer
+     *
+     * @param checkFiles the files to check
      */
     public void checkForNewPlugins(Set<File> checkFiles) {
         for (File file: checkFiles) {
@@ -84,6 +88,8 @@ public class PluginFinder extends Observable implements ActionListener {
 
     /**
      * This function is called when we want to check for old Plugins on each iteration of the timer
+     *
+     * @param checkFiles the files to check
      */
     public void checkForOldPlugins(Set<File> checkFiles) {
         for (File file: this.foundFiles) {

@@ -16,6 +16,7 @@ public interface Plugin {
     /**
      * This function is called when we want to transform the text with the Plugin
      *
+     * @param text the initial text
      * @return the text transformed by the Plugin
      */
     public String doAction(String text);
