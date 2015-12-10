@@ -2,6 +2,11 @@ package ihm;
 
 import java.io.File;
 
+/**
+ * This class represents the main of the application
+ *
+ * @author Damien SAUVALLE, Laurent THIEBAULT, Amélie MULEBECQ, Nicolas SVIRCHEVSKY
+ */
 public class Main {
     public static void main(String[] args) {
         File directory = new File("./dropins");

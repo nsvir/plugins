@@ -2,7 +2,6 @@ package ihm;
 
 import files.PluginFinder;
 import plugins.Plugin;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,6 +12,11 @@ import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * This class represents the frame of the application
+ *
+ * @author Damien SAUVALLE, Laurent THIEBAULT, Amélie MULEBECQ, Nicolas SVIRCHEVSKY
+ */
 public class AppFrame extends JFrame implements Observer {
 
     protected static final int WIDTH = 600;
@@ -25,22 +29,26 @@ public class AppFrame extends JFrame implements Observer {
     protected JMenu tools;
     protected List<JMenuItem> toolsMenuItems;
 
+    /**
+     * Constructor of the AppFrame
+     *
+     * @param directory the directory where plugins are
+     */
     public AppFrame(File directory) {
         this.pluginFinder = new PluginFinder(directory);
+        this.configureTheFrame();
+        this.setComponentsOfTheFrame();
+        this.pluginFinder.startTimer();
+        this.pluginFinder.addObserver(this);
+    }
 
-        // Set the title of the frame
-        this.setTitle("Plugins");
-        // Set the size of the frame
-        this.setSize(WIDTH, HEIGHT);
-
-        // Set the frame in the center of the screen
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-
+    /**
+     * This function is called when we create the components of the frame
+     */
+    public void setComponentsOfTheFrame() {
         // Add a text area
         this.textArea = new JTextArea();
         this.add(textArea);
-
         // Setting menu
         this.menuBar = new JMenuBar();
         this.tools = new JMenu();
@@ -48,15 +56,28 @@ public class AppFrame extends JFrame implements Observer {
         menuBar.add(tools);
         this.setJMenuBar(menuBar);
         this.toolsMenuItems = new ArrayList<JMenuItem>();
-
-        // Configure the PluginFinder
-        this.pluginFinder.startTimer();
-        this.pluginFinder.addObserver(this);
-
     }
 
-    protected Plugin createPlugin(File file){
+    /**
+     * This function is called when we configure the frame (title, size, dimensions...)
+     */
+    public void configureTheFrame() {
+        // Set the title of the frame
+        this.setTitle("Plugins");
+        // Set the size of the frame
+        this.setSize(WIDTH, HEIGHT);
+        // Set the frame in the center of the screen
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+    }
 
+    /**
+     * This function is called when we want to create a Plugin with a File accepted by the PluginFilter
+     *
+     * @param file the file found
+     * @return the Plugin created
+     */
+    protected Plugin createPlugin(File file){
         Class<?> c = null;
         Plugin plugin = null;
         try {
@@ -68,10 +89,15 @@ public class AppFrame extends JFrame implements Observer {
         }
         return plugin;
     }
-    
+
+    /**
+     * This function is called when an observable notify the AppFrame
+     *
+     * @param o an observable
+     * @param arg the arg of the observable
+     */
     @Override
     public void update(Observable o, Object arg) {
-
         this.toolsMenuItems.clear();
         this.tools.removeAll();
 
@@ -85,10 +111,8 @@ public class AppFrame extends JFrame implements Observer {
                     textArea.setText(plugin.doAction(textArea.getText()));
                 }
             });
-
             this.toolsMenuItems.add(toolsMenuItem);
             this.tools.add(toolsMenuItem);
-
         }
     }
 }

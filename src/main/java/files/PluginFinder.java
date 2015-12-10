@@ -1,13 +1,16 @@
 package files;
 
-import plugins.Plugin;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.*;
 import javax.swing.Timer;
 
+/**
+ * This class represents the main of the application
+ *
+ * @author Damien SAUVALLE, Laurent THIEBAULT, Amélie MULEBECQ, Nicolas SVIRCHEVSKY
+ */
 public class PluginFinder extends Observable implements ActionListener {
     protected File directory;
     protected PluginFilter pluginFilter;
@@ -23,7 +26,7 @@ public class PluginFinder extends Observable implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Set<File> files = this.getClassFiles();
+        Set<File> files = this.getPluginFiles();
         this.checkForNewPlugins(files);
         this.checkForOldPlugins(files);
     }
@@ -36,7 +39,7 @@ public class PluginFinder extends Observable implements ActionListener {
         this.timer.stop();
     }
 
-    public Set<File> getClassFiles() {
+    public Set<File> getPluginFiles() {
         Set<File> classFiles = new HashSet<File>();
         for (File file: this.directory.listFiles()) {
             if(this.pluginFilter.accept(directory, file.getName())) {
@@ -51,7 +54,6 @@ public class PluginFinder extends Observable implements ActionListener {
             if (!this.foundFiles.contains(file)) {
                 System.out.println("New file " + file.getName());
                 this.foundFiles.add(file);
-
                 setChanged();
                 notifyObservers();
             }
@@ -62,9 +64,7 @@ public class PluginFinder extends Observable implements ActionListener {
         for (File file: this.foundFiles) {
             if(!checkFiles.contains(file)) {
                 this.foundFiles.remove(file);
-
                 System.out.println("Old file " + file.getName());
-
                 setChanged();
                 notifyObservers();
             }
