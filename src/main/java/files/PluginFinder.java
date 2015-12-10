@@ -92,9 +92,11 @@ public class PluginFinder extends Observable implements ActionListener {
      * @param checkFiles the files to check
      */
     public void checkForOldPlugins(Set<File> checkFiles) {
-        for (File file: this.foundFiles) {
+
+        for (Iterator<File> iterator = this.foundFiles.iterator(); iterator.hasNext();){
+            File file = iterator.next();
             if(!checkFiles.contains(file)) {
-                this.foundFiles.remove(file);
+                iterator.remove();
                 System.out.println("Old file " + file.getName());
                 setChanged();
                 notifyObservers();
