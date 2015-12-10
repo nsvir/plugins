@@ -17,6 +17,11 @@ public class PluginFinder extends Observable implements ActionListener {
     protected Set<File> foundFiles;
     protected Timer timer;
 
+    /**
+     * Constructor of PluginFinder
+     *
+     * @param directory the directory of the PluginFinder
+     */
     public PluginFinder (File directory) {
         this.directory = directory;
         this.pluginFilter = new PluginFilter();
@@ -24,6 +29,11 @@ public class PluginFinder extends Observable implements ActionListener {
         this.timer = new Timer(1000, this);
     }
 
+    /**
+     * This function is called on each iteration of the PluginFinder's timer
+     *
+     * @param e the event captured
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         Set<File> files = this.getPluginFiles();
@@ -31,14 +41,23 @@ public class PluginFinder extends Observable implements ActionListener {
         this.checkForOldPlugins(files);
     }
 
+    /**
+     * This function is called when we want to start the timer of the PluginFinder
+     */
     public void startTimer(){
         this.timer.start();
     }
 
+    /**
+     * This function is called when we want to stop the timer of the PluginFinder
+     */
     public void stopTimer(){
         this.timer.stop();
     }
 
+    /**
+     * This function is called when we want to get Plugin Files into the directory of the PluginFinder
+     */
     public Set<File> getPluginFiles() {
         Set<File> classFiles = new HashSet<File>();
         for (File file: this.directory.listFiles()) {
@@ -49,6 +68,9 @@ public class PluginFinder extends Observable implements ActionListener {
         return classFiles;
     }
 
+    /**
+     * This function is called when we want to check for new Plugins on each iteration of the timer
+     */
     public void checkForNewPlugins(Set<File> checkFiles) {
         for (File file: checkFiles) {
             if (!this.foundFiles.contains(file)) {
@@ -60,6 +82,9 @@ public class PluginFinder extends Observable implements ActionListener {
         }
     }
 
+    /**
+     * This function is called when we want to check for old Plugins on each iteration of the timer
+     */
     public void checkForOldPlugins(Set<File> checkFiles) {
         for (File file: this.foundFiles) {
             if(!checkFiles.contains(file)) {
